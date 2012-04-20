@@ -2,27 +2,20 @@
 %html
   %head
     %title Pivotal Planning Poker
-    = stylesheet_link_tag 'blueprint/screen'
-    = stylesheet_link_tag 'blueprint/print', :media => 'print'
-    = stylesheet_link_tag 'poker'
-    
-    /[if lt IE 8]
-      = stylesheet_link_tag 'blueprint/ie'
+    = stylesheet_link_tag 'application'
     
   %body
-    = javascript_include_tag 'jquery'
+    = javascript_include_tag 'application'
     = csrf_meta_tag
 
     .container
-      .span-24.last
-        %h1 Pivotal Tracker Planning Poker
+      %h1 Pivotal Tracker Planning Poker
 
       - if flash.any?
-        .span-24.last
-          = flash_messages
+        .row= flash_messages
 
       = yield
 
-      .span-24.last
+      .row
         %hr.prepend-top
         = link_to "Pivotal Planning Poker git repo", "http://github.com/stackbuilders/pivotal_planning_poker"

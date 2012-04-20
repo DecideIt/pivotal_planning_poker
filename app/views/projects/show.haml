@@ -5,10 +5,17 @@
 
 %h2 Stories
 
-%ul
-  - @stories.each do |story|
-    %li
-      = link_to(story.story_name, project_story_path(story.project_id, story.story_id))
-      = " Estimate: #{estimate_for(story)}"
+.span12
+  - @stories.sort{ |a,b| DateTime.parse(a.created_at) <=> DateTime.parse(b.created_at) }.each do |story|
+    .row.story-summary
+      .alert.alert-info.span8
+        = image_tag("https://cdn1-pivotaltracker.pantherssl.com/images/v7/application/stories_view/icons/#{story.story_type}.png")
+        = link_to(story.story_name, project_story_path(story.project_id, story.story_id))
+        - unless story.description.blank?
+          .alert.alert-message= story.description
+      %a{:href => project_story_path(story.project_id, story.story_id)}
+        .estimate.span2.btn.btn-success
+          %small Current Estimate:
+          %h1= estimate_for(story)
 
 %p= link_to("Back to projects", projects_path)

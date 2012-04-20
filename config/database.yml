@@ -1,9 +1,48 @@
+<% dev_file = File.join(Rails.root.to_s, "config", "development_database.yml") %>
+<% test_file = File.join(Rails.root.to_s, "config", "test_database.yml") %>
+<% prod_file = File.join(Rails.root.to_s, "config", "production_database.yml") %>
+#
+# Setting up a development environment? Override any of the default values
+# by creating a file in config/ named development_database.yml and the
+# changes will automatically be imported.
+#
+# See development_database.yml.example
+# 
+default_development: &default_development
+  adapter: sqlite3
+  database: db/pivotal_planning_poker_development.sqlite3
+  pool: 5
+  timeout: 5000
+
 development:
-  adapter: mysql
-  database: pivotal_planning_poker_development
-  user: root
+<%= File.exist?(dev_file) ? IO.read(dev_file) : "  <<: *default_development" %>
+
+#
+# Override any of the default values by creating a file in config/ named
+# test_database.yml and the changes will automatically be imported.
+#
+# See test_database.yml.example
+# 
+default_test: &default_test
+  adapter: sqlite3
+  database: db/pivotal_planning_poker_test.sqlite3
+  pool: 5
+  timeout: 5000
 
 test:
-  adapter: mysql
-  database: pivotal_planning_poker_test
-  user: root
+<%= File.exist?(test_file) ? IO.read(test_file) : "  <<: *default_test" %>
+
+default_production: &default_production
+  adapter: postgresql
+  database: pivotal_planning_poker
+  pool: 500
+  timeout: 15000
+
+#
+# Override any of the default values by creating a file in config/ named
+# production_database.yml and the changes will automatically be imported.
+#
+# See production_database.yml.example
+# 
+production:
+<%= File.exist?(prod_file) ? IO.read(prod_file) : "  <<: *default_production" %>

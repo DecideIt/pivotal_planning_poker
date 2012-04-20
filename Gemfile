@@ -1,15 +1,28 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+end
 
-gem 'mysql'
-gem 'curb', '0.7.8'
-gem 'nokogiri', '1.4.4'
-gem 'haml', '3.0.24'
-gem 'heroku', '2.14.0'
+# gem 'rake', '~> 0.8.7'
+gem 'rails', '3.2.1'
+gem 'jquery-rails'
+
+gem 'curb'
+gem 'nokogiri'
+gem 'haml'
+gem 'heroku'
+gem 'thin'
+
+group :production do
+  gem 'pg'
+end
 
 group :test, :development do
-  gem 'rspec-rails', '2.2.1'
-  gem 'factory_girl', '1.3.2'
-  gem 'factory_girl_rails', '1.0.0'
+  gem 'sqlite3'
+  gem 'rspec-rails'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
 end

@@ -8,6 +8,7 @@ module PivotalPlanningPoker
     tracker_attribute :estimate, './estimate'
     tracker_attribute :requested_by, './requested_by'
     tracker_attribute :current_status, './current_status'
+    tracker_attribute :created_at, './created_at'
 
     def self.find(project_id, story_id, token)
       client = Client.new(token)
@@ -24,9 +25,9 @@ module PivotalPlanningPoker
 
     def self.for_project(project, token)
       client = Client.new(token)
-      resp   = client.get("https://www.pivotaltracker.com/services/v3/projects/#{project.project_id}/stories")
+      resp   = client.get("https://www.pivotaltracker.com/services/v3/projects/#{project.project_id}/iterations/current_backlog")
 
-      Nokogiri::XML(resp).xpath('/stories/story').map do |story_node|
+      Nokogiri::XML(resp).xpath('/iterations/iteration/stories/story').map do |story_node|
         new(story_node)
       end
     end
